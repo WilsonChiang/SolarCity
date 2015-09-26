@@ -1,14 +1,15 @@
 
 var Dashboard = React.createClass({
   render: function () {
+    var data = Server.getMoneySaved("house", new Date("2015-09-01").getTime(), Date.now());
     return (
       <div className="dashboard">
         <div className="box-wide">
           <LineGraph
-            labels={["January", "February", "March", "April", "May", "June", "July"]}
+            labels={data.times}
             data={[
-                {label: "You", data:[65, 59, 80, 81, 56, 55, 40]},
-                {label: "Average", data:[60, 60, 65, 70, 60, 60, 50]}
+                {label: "House", data:data.results.house.data},
+                {label: "Average", data:data.results.average.data}
               ]}/>
         </div>
         <div className="box">

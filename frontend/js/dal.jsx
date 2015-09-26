@@ -26,14 +26,17 @@ var Server = (function () {
 
     getMoneySaved(houseID, startDate, endDate) {
       return {
-        house: {
-          average: 123,
-          data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
-        },
+        times: this.getTimeline(startDate, endDate, TIME.day),
+        results: {
+          house: {
+            average: 123,
+            data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
+          },
 
-        average: {
-          average: 123,
-          data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
+          average: {
+            average: 123,
+            data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
+          }
         }
       }
     }
@@ -46,10 +49,15 @@ var Server = (function () {
       var secs, data = [], val = average;
       console.log(+start, +end, step);
       for (secs = +start; secs < +end; secs += step) {
-        data.push({
-          time: secs,
-          value: val + (Math.random() * varience)
-        });
+        data.push(val + (Math.random() * varience));
+      }
+      return data;
+    }
+
+    getTimeline(start, end, step) {
+      var secs, data = [];
+      for (secs = +start; secs < +end; secs += step) {
+        data.push(new Date(secs).toDateString());
       }
       return data;
     }
