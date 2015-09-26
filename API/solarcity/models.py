@@ -10,6 +10,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils.functional import cached_property
+from solarcity import utils
 
 
 class Home(models.Model):
@@ -38,6 +40,9 @@ class Home(models.Model):
 
     class Meta:
         db_table = 'home'
+
+    def __unicode__(self):
+        return 'Home:{0}'.format(self.wel_address)
 
 
 class Reading(models.Model):
@@ -68,7 +73,31 @@ class Reading(models.Model):
     class Meta:
         db_table = 'reading'
 
+    def __unicode__(self):
+        return 'Reading: Home:{0} Time: {1}'.format(self.wel, self.sample_time)
+
 
 class Energy(Reading):
+
+    @cached_property
+    def home(self):
+        Home.objects.get(wel_address=self.wel).first()
+
+    @cached_property
+    def cost_of_power(self):
+        power = utils.heat_sun(self.solar_power, self.home.solar_system)
+        energy = utils.energy(power, 60)
+        utils.cost_of_energy(energy, )
+
+    @cached_property
+    def fuel_cost(self):
+        return utils.cost_oil_kwh if self.home.conventional_system == 'Oil' else utils.cost_electricity_kwh
+
+    class Meta:
+        proxy = True
+
+
+class Money(Reading):
+
     class Meta:
         proxy = True
