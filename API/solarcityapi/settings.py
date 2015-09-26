@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'solarcityapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '173.194.238.206',
+        'HOST': '173.194.239.27',
         'PORT': 3306,
         'NAME': "Solarcity",
         'USER': "root",
