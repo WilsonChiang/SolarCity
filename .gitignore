@@ -134,6 +134,7 @@ target/
 
 # IntelliJ
 .idea/
+*.iml
 
 ### Node ###
 # Logs

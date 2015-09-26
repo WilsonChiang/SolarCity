@@ -14,7 +14,7 @@ var App = React.createClass({
         <TitleBar />
         {this.main()}
       </div>
-    )
+    );
   }
 });
 

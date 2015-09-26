@@ -21,3 +21,10 @@ class HomesViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.HomeSerializer
     filter_class = filters.HomeFilter
     queryset = models.Home.objects.all()
+
+
+class EnergyViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.EnergySerializer
+    filter_class = filters.EnergyFilter
+    queryset = models.Energy.objects.all()
+
