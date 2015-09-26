@@ -13,16 +13,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='reading',
-            name='date',
-            field=models.DateField(db_index=True, null=True, blank=True),
-        ),
-        migrations.AlterField(
-            model_name='reading',
-            name='time',
-            field=models.TimeField(db_index=True, null=True, blank=True),
-        ),
-        migrations.AlterField(
-            model_name='reading',
             name='wel',
             field=models.CharField(db_index=True, max_length=20, null=True, db_column='WEL', blank=True),
         ),

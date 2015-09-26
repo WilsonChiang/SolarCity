@@ -35,8 +35,6 @@ class Home(models.Model):
                                          null=True)  
     electricity_consumption = models.CharField(db_column='Electricity_Consumption', max_length=255, blank=True,
                                                null=True)  
-    created_at = models.DateTimeField(db_column='createdAt', blank=True, null=True)
-    updated_at = models.DateTimeField(db_column='updatedAt', blank=True, null=True)
 
     class Meta:
         db_table = 'home'
@@ -44,9 +42,8 @@ class Home(models.Model):
 
 class Reading(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    wel = models.CharField(db_column='WEL', max_length=20, blank=True, null=True,
-                           db_index=True)
-    sample_time = models.DateTimeField(db_column='SAMPLE_TIME', blank=True, null=True)  
+    wel = models.CharField(db_column='WEL', max_length=20, blank=True, null=True, db_index=True)
+    sample_time = models.DateTimeField(db_column='SAMPLE_TIME', blank=True, null=True, db_index=True)
     aux_heat_on = models.FloatField(db_column='AUX_HEAT_ON', blank=True, null=True)  
     flow_gly = models.FloatField(db_column='FLOW_GLY', blank=True, null=True)  
     flow_water = models.FloatField(db_column='FLOW_WATER', blank=True, null=True)  
@@ -67,10 +64,6 @@ class Reading(models.Model):
     led_t_coll_hi = models.FloatField(db_column='LED_T_COLL_HI', blank=True, null=True)  
     led_t_stor_hi = models.FloatField(db_column='LED_T_STOR_HI', blank=True, null=True)  
     led_delt_lo = models.FloatField(db_column='LED_DELT_LO', blank=True, null=True)  
-    updated_at = models.DateTimeField(db_column='updatedAt', blank=True, null=True)
-    created_at = models.DateTimeField(db_column='createdAt', blank=True, null=True)
-    date = models.DateField(blank=True, null=True, db_index=True)
-    time = models.TimeField(blank=True, null=True, db_index=True)
 
     class Meta:
         db_table = 'reading'
