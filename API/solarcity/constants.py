@@ -13,3 +13,9 @@ class Emissions(Enum):
     litre_of_oil = 2.6  # 2.6 kg per litre of oil
     kwh_of_oil = 0.42  # 0.42 kg per kWh of oil
     kwh_of_electricity = 1.2  # 1.2 kg per kWh of electricity
+
+
+class Collectors(Enum):
+    # Solar System Types
+    SB32 = 'SB32'
+    SB64 = 'SB64'
