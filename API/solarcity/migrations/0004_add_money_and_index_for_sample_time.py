@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('solarcity', '0005_create_home_foreign_keys'),
+        ('solarcity', '0003_energy'),
     ]
 
     operations = [
@@ -19,5 +19,10 @@ class Migration(migrations.Migration):
                 'proxy': True,
             },
             bases=('solarcity.reading',),
+        ),
+        migrations.AlterField(
+            model_name='reading',
+            name='sample_time',
+            field=models.DateTimeField(db_index=True, null=True, db_column='SAMPLE_TIME', blank=True),
         ),
     ]
