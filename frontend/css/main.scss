@@ -91,6 +91,7 @@ $box-width: 30rem;
 
 
 .box-wide {
+  flex-grow: 1;
   height: $box-height;
   width: $box-width * 2;
 }
