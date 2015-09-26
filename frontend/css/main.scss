@@ -1,6 +1,97 @@
+$flat-dark-blue: #2c3e50;
+$flat-light-red: #e74c3c;
+$flat-dark-green: #16a085;
 
-html, body {
+$title-bar-background: $flat-dark-blue;
+
+/* Utilities */
+.u-unselectable {
+  -webkit-user-select: none; 
+   -khtml-user-select: none; 
+     -moz-user-select: none; 
+       -o-user-select: none; 
+          user-select: none;
+}
+
+.foo, .bar {
+  display: block;
+  background-color: $flat-light-red;
+}
+
+.bar {
+  background-color: $flat-dark-green;
+}
+
+html, body, .app {
   border: 0;
   background: ghostwhite;
+  color: #444;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title-bar {
+  left: 0;
+  right: 0;
+  background: $flat-dark-blue;
+  color: #eee;
+}
+
+.title-bar__items {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  // Flexbox
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title-bar__item {
+  cursor: pointer;
+  padding: 1rem;
+  margin: 0;
+  min-width: 10rem;
+  text-align: center;
+}
+
+.title-bar__item:hover {
+  background: lighten($flat-dark-blue, 5%);
+}
+
+/* Box
+ * A box is a component on the dashboard.
+ */
+
+.dashboard {
+  display: flex;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  flex-flow: row wrap;
+}
+
+$box-height: 30rem;
+$box-width: 30rem;
+
+.box,
+.box-wide {
+  margin: 1rem;
+  max-width: 100% !important;
+}
+
+.box {
+  flex: 1;
+  min-width: $box-width;
+  height: $box-height;
+}
+
+
+.box-wide {
+  height: $box-height;
+  width: $box-width * 2;
 }
 
