@@ -1,6 +1,12 @@
 from API.solarcity.constants import Collectors
 
 
+cost_oil_kwh = 0.20 #$
+cost_electricity_kwh = 0.17 #$
+emissions_oil_kwh = 0.42 #kg
+emissions_electricty_kwh = 1.2 #kg
+
+
 def energy(power, time):
     """
     :param power: power in kW
