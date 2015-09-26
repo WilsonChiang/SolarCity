@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('solarcity', '0002_add_indexes'),
+        ('solarcity', '0002_remove_managed_meta'),
     ]
 
     operations = [
