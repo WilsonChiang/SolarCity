@@ -5,7 +5,6 @@ var Server = (function () {
   var TIME = {};
   TIME.second = 1000;
   TIME.minute = TIME.second * 60;
-  TIME.minute = TIME.second * 60;
   TIME.hour = TIME.minute * 60;
   TIME.day = TIME.hour * 24;
   TIME.week = TIME.day * 7;
