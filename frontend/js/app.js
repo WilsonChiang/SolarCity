@@ -3,32 +3,35 @@
 var App = React.createClass({
   displayName: "App",
 
+  main: function main() {
+    if (this.props.children) {
+      return this.props.children;
+    } else {
+      return React.createElement(Dashboard, null);
+    }
+  },
+
   render: function render() {
     return React.createElement(
       "div",
       { className: "app" },
       React.createElement(TitleBar, null),
-      React.createElement(
-        "div",
-        { className: "dashboard" },
-        React.createElement("div", { className: "box-wide foo" }),
-        React.createElement("div", { className: "box bar" }),
-        React.createElement("div", { className: "box foo" }),
-        React.createElement("div", { className: "box bar" }),
-        React.createElement("div", { className: "box foo" }),
-        React.createElement("div", { className: "box bar" }),
-        React.createElement("div", { className: "box foo" }),
-        React.createElement("div", { className: "box bar" }),
-        React.createElement("div", { className: "box foo" }),
-        React.createElement("div", { className: "box bar" }),
-        React.createElement("div", { className: "box foo" }),
-        React.createElement("div", { className: "box bar" }),
-        React.createElement("div", { className: "box foo" }),
-        React.createElement("div", { className: "box bar" }),
-        React.createElement("div", { className: "box foo" })
-      )
+      this.main()
     );
   }
 });
 
-React.render(React.createElement(App, null), document.getElementsByClassName('app')[0]);
+var Link = ReactRouter.Link,
+    Router = ReactRouter.Router,
+    Route = ReactRouter.Route;
+
+React.render(React.createElement(
+  Router,
+  null,
+  React.createElement(
+    Route,
+    { path: "/", component: App },
+    React.createElement(Route, { path: "more-info", component: MoreInfo })
+  ),
+  React.createElement(Route, { path: "*", component: FourOhFour })
+), document.getElementsByClassName('app')[0]);

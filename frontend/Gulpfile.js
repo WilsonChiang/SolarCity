@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 gulp.task('js', function () {
   gulp.src('js/**/*.jsx')
     .pipe(babel())
-    .on('error', console.error.bind(console))
+    .on('error', function (err) { console.log(err.message) })
     .pipe(livereload())
     .pipe(gulp.dest('js'));
 });

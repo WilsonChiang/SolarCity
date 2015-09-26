@@ -8,17 +8,21 @@ var TitleBar = React.createClass({
       "nav",
       { className: "title-bar" },
       React.createElement(
-        "ul",
-        { className: "title-bar__items u-unselectable" },
+        Link,
+        { to: "/" },
         React.createElement(
-          "li",
+          "span",
           { className: "title-bar__item" },
           "Dashboard"
-        ),
+        )
+      ),
+      React.createElement(
+        Link,
+        { to: "/more-info" },
         React.createElement(
-          "li",
+          "span",
           { className: "title-bar__item" },
-          "Settings"
+          "More Info"
         )
       )
     );
