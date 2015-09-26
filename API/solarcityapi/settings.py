@@ -78,8 +78,18 @@ WSGI_APPLICATION = 'solarcityapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '159.203.88.167',
+        'PORT': 3306,
+        'NAME': "solarcity",
+        'USER': "root",
+        'PASSWORD': "tdqm3ygwyq",
+        'OPTIONS': {
+            'charset': 'utf8',
+            'init_command': ('SET '
+                             'default_storage_engine=INNODB,'
+                             'character_set_connection=utf8'),
+            }
     }
 }
 
