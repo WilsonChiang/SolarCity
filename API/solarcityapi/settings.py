@@ -27,11 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-REST_FRAMEWORK = {
-    'PAGE_SIZE': 10,
-}
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -86,11 +81,11 @@ WSGI_APPLICATION = 'solarcityapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',
+        'HOST': '173.194.238.206',
         'PORT': 3306,
-        'NAME': "solarcity",
+        'NAME': "Solarcity",
         'USER': "root",
-        'PASSWORD': "solarhack2015",
+        'PASSWORD': "FriskyDingo!",
         'OPTIONS': {
             'charset': 'utf8',
             'init_command': ('SET '
@@ -100,6 +95,9 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

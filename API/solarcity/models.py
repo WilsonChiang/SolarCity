@@ -44,8 +44,9 @@ class Home(models.Model):
 
 class Reading(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    wel = models.CharField(db_column='WEL', max_length=20, blank=True, null=True)
-    sample_time = models.DateTimeField(db_column='SAMPLE_TIME', blank=True, null=True)
+    wel = models.CharField(db_column='WEL', max_length=20, blank=True, null=True,
+                           db_index=True)
+    sample_time = models.DateTimeField(db_column='SAMPLE_TIME', blank=True, null=True)  
     aux_heat_on = models.FloatField(db_column='AUX_HEAT_ON', blank=True, null=True)  
     flow_gly = models.FloatField(db_column='FLOW_GLY', blank=True, null=True)  
     flow_water = models.FloatField(db_column='FLOW_WATER', blank=True, null=True)  
