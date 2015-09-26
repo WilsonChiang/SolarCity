@@ -20,7 +20,7 @@ from solarcity import views
 
 router = routers.DefaultRouter()
 router.register(r'money', views.MoneyViewSet)
-# router.register(r'groups', views.GroupViewSet)
+router.register(r'homes', views.HomesViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),

@@ -15,7 +15,7 @@ from django.db import models
 class Home(models.Model):
     id = models.IntegerField(primary_key=True)
     wel_address = models.CharField(db_column='WEL_Address', max_length=255, blank=True,
-                                   null=True)  
+                                   null=True)
     postal_code = models.CharField(db_column='Postal_Code', max_length=255, blank=True,
                                    null=True)  
     conventional_system = models.CharField(db_column='Conventional_System', max_length=255, blank=True,
@@ -39,13 +39,13 @@ class Home(models.Model):
     updated_at = models.DateTimeField(db_column='updatedAt', blank=True, null=True)  
 
     class Meta:
-        managed = False
         db_table = 'home'
 
 
 class Reading(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    wel = models.CharField(db_column='WEL', max_length=20, blank=True, null=True)  
+    wel = models.CharField(db_column='WEL', max_length=20, blank=True, null=True,
+                           db_index=True)
     sample_time = models.DateTimeField(db_column='SAMPLE_TIME', blank=True, null=True)  
     aux_heat_on = models.FloatField(db_column='AUX_HEAT_ON', blank=True, null=True)  
     flow_gly = models.FloatField(db_column='FLOW_GLY', blank=True, null=True)  
@@ -73,5 +73,4 @@ class Reading(models.Model):
     time = models.TimeField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'reading'

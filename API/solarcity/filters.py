@@ -1,7 +1,5 @@
 import django_filters
 from solarcity import models
-from rest_framework import filters
-from rest_framework import generics
 
 
 class MoneyFilter(django_filters.FilterSet):
@@ -12,10 +10,15 @@ class MoneyFilter(django_filters.FilterSet):
         model = models.Reading
 
     def filter_home(self, qs, value):
-        return qs.filter(wel=value)[:100]
+        qs = qs.filter(wel=value)[:1000]
+        print qs.query
+        return qs
 
     def filter_time(self, qs, value):
         return qs
 
 
+class HomeFilter(django_filters.FilterSet):
 
+    class Meta:
+        model = models.Home

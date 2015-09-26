@@ -6,3 +6,9 @@ class MoneySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta(object):
         model = models.Reading
+
+
+class HomeSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta(object):
+        model = models.Home
