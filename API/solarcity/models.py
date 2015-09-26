@@ -35,8 +35,8 @@ class Home(models.Model):
                                          null=True)  
     electricity_consumption = models.CharField(db_column='Electricity_Consumption', max_length=255, blank=True,
                                                null=True)  
-    created_at = models.DateTimeField(db_column='createdAt', blank=True, null=True)  
-    updated_at = models.DateTimeField(db_column='updatedAt', blank=True, null=True)  
+    created_at = models.DateTimeField(db_column='createdAt', blank=True, null=True)
+    updated_at = models.DateTimeField(db_column='updatedAt', blank=True, null=True)
 
     class Meta:
         db_table = 'home'
@@ -67,10 +67,15 @@ class Reading(models.Model):
     led_t_coll_hi = models.FloatField(db_column='LED_T_COLL_HI', blank=True, null=True)  
     led_t_stor_hi = models.FloatField(db_column='LED_T_STOR_HI', blank=True, null=True)  
     led_delt_lo = models.FloatField(db_column='LED_DELT_LO', blank=True, null=True)  
-    updated_at = models.DateTimeField(db_column='updatedAt', blank=True, null=True)  
-    created_at = models.DateTimeField(db_column='createdAt', blank=True, null=True)  
-    date = models.DateField(blank=True, null=True)
-    time = models.TimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(db_column='updatedAt', blank=True, null=True)
+    created_at = models.DateTimeField(db_column='createdAt', blank=True, null=True)
+    date = models.DateField(blank=True, null=True, db_index=True)
+    time = models.TimeField(blank=True, null=True, db_index=True)
 
     class Meta:
         db_table = 'reading'
+
+
+class Energy(Reading):
+    class Meta:
+        proxy = True

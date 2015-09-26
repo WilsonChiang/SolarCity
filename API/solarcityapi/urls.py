@@ -19,11 +19,11 @@ from rest_framework import routers
 from solarcity import views
 
 router = routers.DefaultRouter()
-router.register(r'money', views.MoneyViewSet)
 router.register(r'homes', views.HomesViewSet)
+router.register(r'energy', views.EnergyViewSet)
+router.register(r'money', views.MoneyViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(router.urls)),
 ]

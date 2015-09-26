@@ -12,3 +12,9 @@ class HomeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta(object):
         model = models.Home
+
+
+class EnergySerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta(object):
+        model = models.Energy
