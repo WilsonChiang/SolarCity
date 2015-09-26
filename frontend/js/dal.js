@@ -55,6 +55,11 @@ var Server = (function () {
         };
       }
     }, {
+      key: 'getEnergyUsed',
+      value: function getEnergyUsed(houseID, startDate, endDate) {
+        return getMoneySaved(houseID, startDate, endDate);
+      }
+    }, {
       key: 'randomTimeSeriesData',
       value: function randomTimeSeriesData(start, end, step, average, varience) {
         var secs,

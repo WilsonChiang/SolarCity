@@ -37,7 +37,7 @@ var Server = (function () {
           data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
         }
       }
-    },
+    }
 
     getEnergyUsed(houseID, startDate, endDate) {
       return getMoneySaved(houseID, startDate, endDate);
