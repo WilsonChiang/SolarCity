@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'solarcity',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -50,7 +51,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'SolarCity.urls'
+ROOT_URLCONF = 'solarcityapi.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'SolarCity.wsgi.application'
+WSGI_APPLICATION = 'solarcityapi.wsgi.application'
 
 
 # Database
