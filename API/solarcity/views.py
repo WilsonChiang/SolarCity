@@ -2,7 +2,7 @@ import datetime
 from django.http import Http404
 from rest_framework import viewsets
 from rest_framework.response import Response
-from solarcity import serializers, models, filters
+from solarcity import serializers, models, filters, utils
 
 
 class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -17,7 +17,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         home = models.Home.objects.filter(wel_address=pk).first()
         if not home:
             raise Http404
-        qs = models.Money.objects.filter(wel=home.wel_address)
+        qs = models.Energy.objects.filter(wel=home.wel_address)
 
         if min_time and int(min_time):
             min_time = datetime.datetime.fromtimestamp(int(min_time))
@@ -27,8 +27,22 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
             max_time = datetime.datetime.fromtimestamp(int(max_time))
             qs = qs.filter(sample_time__lte=max_time)
 
-        serializer = serializers.MoneySerializer(money)
-        return Response(serializer.data)
+        base_energy_cost = utils.cost_of_energy(utils.energy(sum([energy.power_to_heat_total for energy in qs[:60]]), 1),
+                                                 home.fuel_cost)
+        solar_energy_cost = utils.cost_of_energy(utils.energy(sum([energy.power_to_solar_tank for energy in qs[:60]]), 1),
+                                           home.fuel_cost)
+        new_cost = base_energy_cost - solar_energy_cost
+
+        energies = list(qs)
+
+        for i in range((max_time-min_time)/60):
+            if i % 60 == 0:
+                # do the things
+                pass
+            energy_accumulator += energy.power_to_solar_tank
+            pass
+
+        return Response(new_cost)
 
 
 class HomesViewSet(viewsets.ReadOnlyModelViewSet):

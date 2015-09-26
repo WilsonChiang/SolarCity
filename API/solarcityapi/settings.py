@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'solarcityapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '173.194.239.27',
+        'HOST': '192.168.5.2',
         'PORT': 3306,
-        'NAME': "Solarcity",
-        'USER': "root",
-        'PASSWORD': "FriskyDingo!",
+        'NAME': "solarcity",
+        'USER': "myaio",
+        'PASSWORD': "myaio",
         'OPTIONS': {
             'charset': 'utf8',
             'init_command': ('SET '
