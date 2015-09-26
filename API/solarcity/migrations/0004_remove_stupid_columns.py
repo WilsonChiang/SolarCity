@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('solarcity', '0004_energy'),
+        ('solarcity', '0003_energy'),
     ]
 
     operations = [

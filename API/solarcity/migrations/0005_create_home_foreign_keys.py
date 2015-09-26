@@ -17,7 +17,7 @@ def set_home_foreign_key(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('solarcity', '0005_remove_stupid_columns'),
+        ('solarcity', '0004_remove_stupid_columns'),
     ]
 
     operations = [
