@@ -7,21 +7,21 @@ var Dashboard = React.createClass({
     return React.createElement(
       "div",
       { className: "dashboard" },
-      React.createElement("div", { className: "box-wide foo" }),
-      React.createElement("div", { className: "box bar" }),
-      React.createElement("div", { className: "box foo" }),
-      React.createElement("div", { className: "box bar" }),
-      React.createElement("div", { className: "box foo" }),
-      React.createElement("div", { className: "box bar" }),
-      React.createElement("div", { className: "box foo" }),
-      React.createElement("div", { className: "box bar" }),
-      React.createElement("div", { className: "box foo" }),
-      React.createElement("div", { className: "box bar" }),
-      React.createElement("div", { className: "box foo" }),
-      React.createElement("div", { className: "box bar" }),
-      React.createElement("div", { className: "box foo" }),
-      React.createElement("div", { className: "box bar" }),
-      React.createElement("div", { className: "box foo" })
+      React.createElement("div", { className: "box-wide" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" }),
+      React.createElement("div", { className: "box" })
     );
   }
 });
