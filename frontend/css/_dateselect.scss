@@ -1,0 +1,44 @@
+$flat-dark-green: #27ae60;
+
+.date-select {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: stretch;
+
+  flex-flow: row nowrap;
+
+  width: calc(100% - 2rem);
+  max-width: 50rem;
+
+  margin: 0 auto;
+  margin-top: 1rem;
+
+  text-align: center;
+  font-size: 1.5em;
+
+
+  background: $flat-dark-green;
+  color: white;
+  border-radius: 2px;
+}
+
+$date-padding: .5em;
+
+.date-select__text {
+  padding-top: $date-padding;
+  padding-bottom: $date-padding;
+}
+
+.date-select__arrow {
+  width: 6rem;
+  font-size: 1em;
+  cursor: pointer;
+  padding-top: $date-padding;
+  padding-bottom: $date-padding;
+}
+
+.date-select__arrow:hover {
+  background: rgba(0,0,0,.1);
+}
+

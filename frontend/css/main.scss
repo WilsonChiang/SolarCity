@@ -1,3 +1,5 @@
+@import "./dateselect";
+
 $flat-dark-blue: #2c3e50;
 $flat-light-red: #e74c3c;
 $flat-dark-green: #16a085;
@@ -11,6 +13,16 @@ $title-bar-background: $flat-dark-blue;
      -moz-user-select: none; 
        -o-user-select: none; 
           user-select: none;
+}
+
+.u-left {
+  float: left;
+  align-self: flex-start;
+}
+
+.u-right {
+  float: right;
+  align-self: flex-end;
 }
 
 .foo, .bar {
@@ -43,6 +55,10 @@ html, body, .app {
   align-items: center;
 }
 
+.title-bar__icon {
+  margin-right: 1rem;
+}
+
 .title-bar a {
   display: block;
   cursor: pointer;
@@ -59,10 +75,13 @@ html, body, .app {
 }
 
 .dashboard {
-  display: flex;
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
+}
+
+.dashboard__boxes {
+  display: flex;
   flex-flow: row wrap;
 }
 

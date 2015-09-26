@@ -3,14 +3,6 @@ var Server = (function () {
     baseURL: 'http://134.190.144.109:8081/api'
   };
   var TIME = {};
-  TIME.second = 1000;
-  TIME.minute = TIME.second * 60;
-  TIME.minute = TIME.second * 60;
-  TIME.hour = TIME.minute * 60;
-  TIME.day = TIME.hour * 24;
-  TIME.week = TIME.day * 7;
-  TIME.month = TIME.week * 4;
-  TIME.year = TIME.month * 12;
 
   class DAL {
     get(url, data) {
@@ -25,16 +17,16 @@ var Server = (function () {
       return this.get('/homes')
     }
 
-    getMoneySaved(houseID, startDate, endDate) {
+    getMoneySaved(houseID, startDate, endDate, timeFrame) {
       return {
         house: {
           average: 123,
-          data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
+          data: this.randomTimeSeriesData(startDate, endDate, TIME[timeFrame], 100, 10)
         },
 
         average: {
           average: 123,
-          data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
+          data: this.randomTimeSeriesData(startDate, endDate, TIME[timeFrame], 100, 10)
         }
       }
     }
