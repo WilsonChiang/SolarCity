@@ -1,4 +1,4 @@
-from API.solarcity.constants import Collectors
+from solarcity.constants import Collectors
 
 
 cost_oil_kwh = 0.20 #$
