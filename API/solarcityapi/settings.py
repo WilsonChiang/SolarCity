@@ -28,6 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 10,
+}
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -37,6 +41,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
+    'debug_toolbar.apps.DebugToolbarConfig',
+    'rest_framework',
     'solarcity',
 )
 
