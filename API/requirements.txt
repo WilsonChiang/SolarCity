@@ -4,5 +4,4 @@ djangorestframework==3.2.4
 ecdsa==0.13
 paramiko==1.15.2
 pycrypto==2.6.1
-sshtunnel==0.0.4.4
 wsgiref==0.1.2
