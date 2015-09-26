@@ -1,5 +1,8 @@
 from rest_framework import serializers
+from solarcity import models
 
 
-class DataSerializer(serializers.HyperlinkedModelSerializer):
-    pass
+class MoneySerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta(object):
+        model = models.Reading

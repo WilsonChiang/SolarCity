@@ -1,0 +1,33 @@
+{% extends "rest_framework/base.html" %}
+{% load i18n static %}
+{% block style%} {{ block.super }}
+<style>
+.swagger-link, .swagger-link:hover {
+  color: #75B344;
+}
+</style>
+{% endblock %}
+
+{% block branding %}
+{% trans "Team2 RESTful API" %}
+&nbsp;&nbsp;&nbsp;&nbsp;
+  <a class="swagger-link" href="{% url "django.swagger.base.view" %}">
+     Swagger docs
+  </a>
+{% endblock %}
+{% block userlinks %}
+  {% if user.is_authenticated %}
+    <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {{ user.display_name }}
+                <b class="caret"></b>
+            </a>
+            <form id="logout-form" method="post" action="{% url 'v1:logout' %}">{% csrf_token %}</form>
+            <ul class="dropdown-menu">
+              <li><a onclick="document.getElementById('logout-form').submit()">Log out</a></li>
+            </ul>
+        </li>
+  {% else %}
+    <li><a href='{% url 'v1:login' %}'>Log in</a></li>
+  {% endif %}
+{% endblock %}
