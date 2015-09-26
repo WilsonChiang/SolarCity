@@ -37,28 +37,24 @@ html, body, .app {
   right: 0;
   background: $flat-dark-blue;
   color: #eee;
-}
 
-.title-bar__items {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-
-  // Flexbox
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.title-bar__item {
+.title-bar a {
+  display: block;
   cursor: pointer;
   padding: 1rem;
   margin: 0;
   min-width: 10rem;
   text-align: center;
+  text-decoration: none;
+  color: #eee;
 }
 
-.title-bar__item:hover {
+.title-bar a:hover {
   background: lighten($flat-dark-blue, 5%);
 }
 

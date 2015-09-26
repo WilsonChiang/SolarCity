@@ -1,30 +1,34 @@
 
 var App = React.createClass({
+  main: function () {
+    if (this.props.children) {
+      return this.props.children;
+    } else {
+      return <Dashboard />
+    }
+  },
+
   render: function () {
     return (
       <div className="app">
         <TitleBar />
-        <div className="dashboard">
-          <div className="box-wide foo"></div>
-          <div className="box bar"></div>
-          <div className="box foo"></div>
-          <div className="box bar"></div>
-          <div className="box foo"></div>
-          <div className="box bar"></div>
-          <div className="box foo"></div>
-          <div className="box bar"></div>
-          <div className="box foo"></div>
-          <div className="box bar"></div>
-          <div className="box foo"></div>
-          <div className="box bar"></div>
-          <div className="box foo"></div>
-          <div className="box bar"></div>
-          <div className="box foo"></div>
-        </div>
+        {this.main()}
       </div>
     )
   }
 });
 
-React.render(<App />, document.getElementsByClassName('app')[0]);
+var Link = ReactRouter.Link,
+  Router = ReactRouter.Router,
+  Route = ReactRouter.Route;
+
+React.render(
+  <Router>
+    <Route path="/" component={App}>
+      <Route path="more-info" component={MoreInfo} />
+    </Route>
+    <Route path="*" component={FourOhFour} />
+  </Router>,
+  document.getElementsByClassName('app')[0]
+);
 
