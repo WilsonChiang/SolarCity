@@ -137,6 +137,6 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         'LOCATION': 'wilson-is-a-unique-snowflake',
-        'TIMEOUT': 60*60,
+        'TIMEOUT': 60*60*24,
     }
 }
