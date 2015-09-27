@@ -31,7 +31,8 @@ React.render(React.createElement(
   React.createElement(
     Route,
     { path: "/", component: App },
-    React.createElement(Route, { path: "status", component: Status })
+    React.createElement(Route, { path: "status", component: Status }),
+    React.createElement(Route, { path: "badges", component: Badges })
   ),
   React.createElement(Route, { path: "*", component: FourOhFour })
 ), document.getElementsByClassName('app')[0]);

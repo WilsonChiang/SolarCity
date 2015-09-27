@@ -26,6 +26,7 @@ React.render(
   <Router>
     <Route path="/" component={App}>
       <Route path="status" component={Status} />
+      <Route path="badges" component={Badges} />
     </Route>
     <Route path="*" component={FourOhFour} />
   </Router>,

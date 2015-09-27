@@ -26,6 +26,16 @@ var TitleBar = React.createClass({
           { className: "title-bar__item" },
           "System Status"
         )
+      ),
+      React.createElement(
+        Link,
+        { to: "/badges" },
+        React.createElement("i", { className: "title-bar__icon icon-user" }),
+        React.createElement(
+          "span",
+          { className: "title-bar__item" },
+          "Badges"
+        )
       )
     );
   }
