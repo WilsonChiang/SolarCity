@@ -67,6 +67,11 @@ var Server = (function () {
         return this.get('/status/?home=' + houseID + "&timestamp=" + Date.now());
       }
     }, {
+      key: 'sendAlert',
+      value: function sendAlert() {
+        this.get('/sms');
+      }
+    }, {
       key: 'randomTimeSeriesData',
       value: function randomTimeSeriesData(start, end, step, average, varience) {
         var secs,

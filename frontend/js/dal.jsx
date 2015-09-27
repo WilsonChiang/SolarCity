@@ -97,6 +97,10 @@ var Server = (function () {
       return this.get('/status/?home=' + houseID + "&timestamp=" + Date.now())
     }
 
+    sendAlert() {
+      this.get('/sms');
+    }
+
     randomTimeSeriesData(start, end, step, average, varience) {
       var secs, data = [], val = average;
       console.log(+start, +end, step);

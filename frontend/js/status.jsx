@@ -20,6 +20,10 @@ var Status = React.createClass({
     });
   },
 
+  alert: function () {
+    Server.sendAlert();
+  },
+
   render: function () {
 
     var home = this.state.home;
@@ -47,6 +51,9 @@ var Status = React.createClass({
             <div>
               <div className="label">Age of home:</div>
               <div>{home.age_of_home} years</div>
+            </div>
+            <div style={{"text-align":"center", "margin-top":"10px"}}>
+              <button className="button" onClick={this.alert}>Enable Alerts</button>
             </div>
           </div>
           <div className="box-wide-tall">

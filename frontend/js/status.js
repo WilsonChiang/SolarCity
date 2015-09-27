@@ -25,6 +25,10 @@ var Status = React.createClass({
     });
   },
 
+  alert: function alert() {
+    Server.sendAlert();
+  },
+
   render: function render() {
 
     var home = this.state.home;
@@ -98,6 +102,15 @@ var Status = React.createClass({
               null,
               home.age_of_home,
               ' years'
+            )
+          ),
+          React.createElement(
+            'div',
+            { style: { "text-align": "center", "margin-top": "10px" } },
+            React.createElement(
+              'button',
+              { className: 'button', onClick: this.alert },
+              'Enable Alerts'
             )
           )
         ),
