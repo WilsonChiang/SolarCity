@@ -33,35 +33,51 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             raise ValueError
 
-        energies = list(qs)
+        energies = list(qs.cache())
         base_costs = []
         solar_savings = []
         new_costs = []
+
+        base_energies = []
+        solar_energies = []
+        new_energies = []
+
         for i in range((max_time - min_time) / (self._get_factor_based_on_step(step))):
             my_energies = energies[i * self._get_other_step(step):(i + 1) * self._get_other_step(step)]
             if len(my_energies) == 0:
                 continue
-            base_energy_cost = utils.cost_of_energy(sum([energy.power_to_heat_total for energy in my_energies]),
-                                                    home.fuel_cost)
-            solar_energy_cost = utils.cost_of_energy(sum([energy.power_to_solar_tank for energy in my_energies]),
-                                                     home.fuel_cost)
+            base_energy = sum([energy.power_to_heat_total for energy in my_energies])
+            solar_energy = sum([energy.power_to_solar_tank for energy in my_energies])
+
+            base_energy_cost = utils.cost_of_energy(base_energy, home.fuel_cost)
+            solar_energy_cost = utils.cost_of_energy(solar_energy, home.fuel_cost)
+
             new_cost = base_energy_cost - solar_energy_cost
+            new_energy = base_energy - solar_energy
+
             base_costs.append(base_energy_cost)
             solar_savings.append(solar_energy_cost)
             new_costs.append(new_cost)
+
+            base_energies.append(base_energy)
+            solar_energies.append(solar_energy)
+            new_energies.append(new_energy)
 
         average_base = sum(base_costs)/len(base_costs)*1.0
         average_solar = sum(solar_savings)/len(solar_savings)*1.0
         average_new = sum(new_costs)/len(new_costs)*1.0
         foo = {
             'home': {
+                'count': len(new_costs),
                 'average_old': average_base,
                 'average_solar': average_solar,
                 'average_new': average_new,
-                'count': len(new_costs),
                 'new_costs': new_costs,
                 'solar_savings': solar_savings,
                 'base_costs': base_costs,
+                'old_energy_use': base_energies,
+                'solar_energy_use': solar_energies,
+                'new_energy_use': new_energies
             }
         }
 
@@ -84,7 +100,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         step_size *= 24
         if step == 'weekly':
             return step_size
-        # weekly
+        # monthly
         return step_size * 7
 
     def _get_other_other_step(self, step):
@@ -94,7 +110,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         step_size *= 24
         if step == 'weekly':
             return step_size
-        # weekly
+        # monthly
         return step_size * 7
 
 
