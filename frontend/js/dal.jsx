@@ -13,7 +13,7 @@ var DAYS = [
   'Wednesday',
   'Thursday',
   'Friday',
-  'Saturday',
+  'Saturday'
 ];
 
 var SHORT_DAYS = [
@@ -39,7 +39,7 @@ var MONTHS = [
   'October',
   'November',
   'December'
-]
+];
 
 var SHORT_MONTHS = [
   'Jan',
@@ -54,7 +54,7 @@ var SHORT_MONTHS = [
   'Oct',
   'Nov',
   'Dec'
-]
+];
 
 var Server = (function () {
   var CONF = {
@@ -95,14 +95,6 @@ var Server = (function () {
       for (secs = +start; secs < +end; secs += step) {
         data.push(val);
         val += Math.round(((Math.random() * 2) - 1) * varience);
-      }
-      return data;
-    }
-
-    getMonthlyLabels(start, end, step) {
-      var secs, data = [];
-      for (secs = +start; secs < +end; secs += step) {
-        data.push(days[new Date(secs).getDay()]);
       }
       return data;
     }
