@@ -22,6 +22,7 @@ router = routers.DefaultRouter()
 router.register(r'homes', views.HomesViewSet)
 router.register(r'energy', views.EnergyViewSet)
 router.register(r'badges', views.BadgesViewSet)
+router.register(r'status', views.StatusViewSet)
 
 urlpatterns = [
     url(r'^api/sms/', views.SMSViewSet),

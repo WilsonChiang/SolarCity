@@ -38,6 +38,17 @@ class EnergyFilter(django_filters.FilterSet):
         return qs
 
 
+class StatusFilter(django_filters.FilterSet):
+    home = django_filters.MethodFilter(help_text='filter by household id', action='filter_home')
+
+    class Meta:
+        model = models.Reading
+
+    def filter_home(self, qs, value):
+        qs = qs.filter(wel=value).reverse()[:1]
+        return qs
+
+
 class BadgeFilter(django_filters.FilterSet):
     home = django_filters.MethodFilter(help_text='filter by household id', action='filter_home')
 
