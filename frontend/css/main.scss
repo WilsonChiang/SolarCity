@@ -148,3 +148,30 @@ $box-width: 30rem;
   z-index: 100;
   left: 1em;
 }
+
+/* status indicator */
+.status-indicator {
+  position: relative;
+  margin-top: 10px;
+
+  .indicator {
+    background-color: #c0392b;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.25);
+    display: inline-block;
+    position: absolute;
+    top: 48%;
+    left: 3rem;
+    transform: translateY(-50%);
+    &.indicator__enabled {
+      background-color: #2ecc71;
+    }
+  }
+
+  h1 {
+    display: inline-block;
+    margin: 0 0 0 10rem;
+  }
+}

@@ -1,5 +1,6 @@
 import datetime
 from django.http import Http404, JsonResponse
+from django.views.decorators.cache import cache_page, never_cache
 from rest_framework import viewsets
 from rest_framework.response import Response
 from solarcity import serializers, models, filters, utils
@@ -37,31 +38,71 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         base_costs = []
         solar_savings = []
         new_costs = []
+
+        base_energies = []
+        solar_energies = []
+        new_energies = []
+
+        base_emissions = []
+        solar_emissions = []
+        new_emissions = []
+
         for i in range((max_time - min_time) / (self._get_factor_based_on_step(step))):
             my_energies = energies[i * self._get_other_step(step):(i + 1) * self._get_other_step(step)]
             if len(my_energies) == 0:
                 continue
-            base_energy_cost = utils.cost_of_energy(sum([energy.power_to_heat_total for energy in my_energies]),
-                                                    home.fuel_cost)
-            solar_energy_cost = utils.cost_of_energy(sum([energy.power_to_solar_tank for energy in my_energies]),
-                                                     home.fuel_cost)
+            base_energy = sum([energy.power_to_heat_total for energy in my_energies])
+            solar_energy = sum([energy.power_to_solar_tank for energy in my_energies])
+
+            base_energy_cost = utils.cost_of_energy(base_energy, home.fuel_cost)
+            solar_energy_cost = utils.cost_of_energy(solar_energy, home.fuel_cost)
+
             new_cost = base_energy_cost - solar_energy_cost
+            new_energy = base_energy - solar_energy
+
             base_costs.append(base_energy_cost)
             solar_savings.append(solar_energy_cost)
             new_costs.append(new_cost)
+
+            base_energies.append(base_energy)
+            solar_energies.append(solar_energy)
+            new_energies.append(new_energy)
+
+            base_energy_emissions = utils.co2_emissions(base_energy, home.emissions_amount_kg)
+            solar_energy_emissions = utils.co2_emissions(solar_energy, home.emissions_amount_kg)
+            new_energy_emissions = base_energy_emissions - solar_energy_emissions
+
+            base_emissions.append(base_energy_emissions)
+            solar_emissions.append(solar_energy_emissions)
+            new_emissions.append(new_energy_emissions)
 
         average_base = sum(base_costs)/len(base_costs)*1.0
         average_solar = sum(solar_savings)/len(solar_savings)*1.0
         average_new = sum(new_costs)/len(new_costs)*1.0
         foo = {
             'home': {
-                'average_old': average_base,
-                'average_solar': average_solar,
-                'average_new': average_new,
                 'count': len(new_costs),
-                'new_costs': new_costs,
-                'solar_savings': solar_savings,
-                'base_costs': base_costs,
+                'averages': {
+                    'average_base': average_base,
+                    'average_solar': average_solar,
+                    'average_new': average_new,
+                },
+                'costs': {
+                    'new_costs': new_costs,
+                    'solar_savings': solar_savings,
+                    'base_costs': base_costs,
+                },
+                'energy': {
+                    'old_energy_use': base_energies,
+                    'solar_energy_use': solar_energies,
+                    'new_energy_use': new_energies
+                },
+                'emissions': {
+                    'old_energy_emissions': base_emissions,
+                    'solar_energy_use': solar_emissions,
+                    'new_emissions': new_emissions
+
+                }
             }
         }
 
@@ -84,7 +125,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         step_size *= 24
         if step == 'weekly':
             return step_size
-        # weekly
+        # monthly
         return step_size * 7
 
     def _get_other_other_step(self, step):
@@ -94,7 +135,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         step_size *= 24
         if step == 'weekly':
             return step_size
-        # weekly
+        # monthly
         return step_size * 7
 
 
@@ -110,12 +151,19 @@ class EnergyViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Energy.objects.all()
 
 
+class StatusViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.StatusSerializer
+    filter_class = filters.StatusFilter
+    # The data is in the database by sample time, so we can do .last() for performance
+    queryset = models.Status.objects.all()
+
+
 class BadgesViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.BadgesSerializer
     filter_class = filters.BadgeFilter
     queryset = models.Badges.objects.all()
 
-
+@never_cache
 def SMSViewSet(request):
     from twilio.rest import TwilioRestClient
     ACCOUNT_SID = "AC95419b4b89bf3d42e42c41f7a6bf8185"

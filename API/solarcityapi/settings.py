@@ -43,13 +43,14 @@ INSTALLED_APPS = (
     'debug_toolbar.apps.DebugToolbarConfig',
     'rest_framework',
     'solarcity',
-    'cacheops',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
@@ -132,25 +133,10 @@ ENABLE_REDIS = True
 REDIS_HOST = '104.197.49.131'
 REDIS_PORT = 6329
 
-if ENABLE_REDIS:
-    CACHES = {
-        "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": "redis://{host}:{port}/0".format(host=REDIS_HOST, port=REDIS_PORT),
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-                }
-        }
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        'LOCATION': 'wilson-is-a-unique-snowflake',
+        'TIMEOUT': 60*60*24,
     }
-
-
-CACHEOPS_REDIS = {
-    'host': REDIS_HOST,
-    'port': REDIS_PORT,
-    'db': 1,
-    }
-
-CACHEOPS = {
-    '*.*': {'timeout': 60*60}
 }
-

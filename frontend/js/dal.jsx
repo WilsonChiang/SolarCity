@@ -13,7 +13,7 @@ var DAYS = [
   'Wednesday',
   'Thursday',
   'Friday',
-  'Saturday',
+  'Saturday'
 ];
 
 var SHORT_DAYS = [
@@ -39,7 +39,7 @@ var MONTHS = [
   'October',
   'November',
   'December'
-]
+];
 
 var SHORT_MONTHS = [
   'Jan',
@@ -54,7 +54,7 @@ var SHORT_MONTHS = [
   'Oct',
   'Nov',
   'Dec'
-]
+];
 
 var Server = (function () {
   var CONF = {
