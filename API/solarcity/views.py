@@ -54,7 +54,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         average_solar = sum(solar_savings)/len(solar_savings)*1.0
         average_new = sum(new_costs)/len(new_costs)*1.0
         foo = {
-            'home':{
+            'home': {
                 'average_old': average_base,
                 'average_solar': average_solar,
                 'average_new': average_new,
@@ -64,7 +64,6 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
                 'base_costs': base_costs,
             }
         }
-        # json.loads(foo)
 
         return Response(foo)
 

@@ -1,0 +1,55 @@
+$flat-dark-green: #27ae60;
+
+.date-select {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: stretch;
+
+  flex-flow: row nowrap;
+
+  width: calc(100% - 2rem);
+
+  margin: 0 auto;
+  margin-top: 1rem;
+
+  text-align: center;
+  font-size: 1.5em;
+
+
+  background: $flat-dark-green;
+  color: white;
+  border-radius: 2px;
+}
+
+$date-padding: .5em;
+
+.date-select__text {
+  padding-top: $date-padding;
+  padding-bottom: $date-padding;
+  display: inline-block;
+}
+
+.date-select__label {
+  margin-left: 1em;
+}
+
+.date-select__arrow {
+  width: 6rem;
+  font-size: 1em;
+  cursor: pointer;
+  padding-top: $date-padding;
+  padding-bottom: $date-padding;
+}
+
+.date-select__arrow:hover {
+  background: darken($flat-dark-green, 5%);
+}
+
+.date-select__dropdown {
+  background: none;
+  border: none;
+  height: 2em;
+  margin-bottom: -2em;
+  border: 1px solid transparent;
+}

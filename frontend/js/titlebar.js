@@ -13,12 +13,14 @@ var TitleBar = React.createClass({
         React.createElement(
           "span",
           { className: "title-bar__item" },
+          React.createElement("i", { className: "title-bar__icon icon-chart-bar" }),
           "Dashboard"
         )
       ),
       React.createElement(
         Link,
         { to: "/more-info" },
+        React.createElement("i", { className: "title-bar__icon icon-doc-text" }),
         React.createElement(
           "span",
           { className: "title-bar__item" },
