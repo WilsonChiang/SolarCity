@@ -8,9 +8,9 @@ var TitleBar = React.createClass({
             Dashboard
           </span>
         </Link>
-        <Link to="/more-info">
+        <Link to="/status">
           <i className="title-bar__icon icon-doc-text"></i>
-          <span className="title-bar__item">More Info</span>
+          <span className="title-bar__item">System Status</span>
         </Link>
       </nav>
     );

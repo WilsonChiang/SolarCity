@@ -19,12 +19,12 @@ var TitleBar = React.createClass({
       ),
       React.createElement(
         Link,
-        { to: "/more-info" },
+        { to: "/status" },
         React.createElement("i", { className: "title-bar__icon icon-doc-text" }),
         React.createElement(
           "span",
           { className: "title-bar__item" },
-          "More Info"
+          "System Status"
         )
       )
     );

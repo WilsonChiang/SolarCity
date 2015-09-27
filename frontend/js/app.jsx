@@ -25,7 +25,7 @@ var Link = ReactRouter.Link,
 React.render(
   <Router>
     <Route path="/" component={App}>
-      <Route path="more-info" component={MoreInfo} />
+      <Route path="status" component={Status} />
     </Route>
     <Route path="*" component={FourOhFour} />
   </Router>,
