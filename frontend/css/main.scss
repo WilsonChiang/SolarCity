@@ -1,3 +1,4 @@
+@import "./loader";
 @import "./dateselect";
 
 $flat-dark-blue: #2c3e50;
@@ -32,6 +33,10 @@ $title-bar-background: $flat-dark-blue;
 
 .bar {
   background-color: $flat-dark-green;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html, body, .app {
@@ -109,12 +114,19 @@ $box-width: 30rem;
 
 
 .box-wide {
+  padding: 1rem;
   flex-grow: 1;
   height: $box-height;
   width: $box-width * 2;
 }
 
 .text_display_box {
+  padding: 1rem;
   font-size: 30px;
+}
 
+/* Charts */
+.chart {
+  width: 100%;
+  height: 100%;
 }

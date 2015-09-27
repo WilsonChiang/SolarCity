@@ -4,18 +4,26 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
+var TIME = {};
+TIME.second = 1000;
+TIME.minute = TIME.second * 60;
+TIME.hour = TIME.minute * 60;
+TIME.day = TIME.hour * 24;
+TIME.week = TIME.day * 7;
+TIME.month = TIME.week * 4;
+TIME.year = TIME.month * 12;
+var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+var SHORT_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+var SHORT_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 var Server = (function () {
   var CONF = {
-    baseURL: 'http://134.190.144.109:8081/api'
+    baseURL: 'http://104.197.183.223/api'
   };
-  var TIME = {};
-  TIME.second = 1000;
-  TIME.minute = TIME.second * 60;
-  TIME.hour = TIME.minute * 60;
-  TIME.day = TIME.hour * 24;
-  TIME.week = TIME.day * 7;
-  TIME.month = TIME.week * 4;
-  TIME.year = TIME.month * 12;
 
   var DAL = (function () {
     function DAL() {
@@ -40,21 +48,8 @@ var Server = (function () {
       }
     }, {
       key: 'getMoneySaved',
-      value: function getMoneySaved(houseID, startDate, endDate) {
-        return {
-          times: this.getTimeline(startDate, endDate, TIME.day),
-          results: {
-            house: {
-              average: 123,
-              data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
-            },
-
-            average: {
-              average: 123,
-              data: this.randomTimeSeriesData(startDate, endDate, TIME.day, 100, 10)
-            }
-          }
-        };
+      value: function getMoneySaved(houseID, startDate, endDate, step) {
+        return this.get(['/money', houseID, Math.round(+startDate / 1000), Math.round(+endDate / 1000), step].join('/'));
       }
     }, {
       key: 'getEnergyUsed',
@@ -69,17 +64,39 @@ var Server = (function () {
             val = average;
         console.log(+start, +end, step);
         for (secs = +start; secs < +end; secs += step) {
-          data.push(val + Math.random() * varience);
+          data.push(val);
+          val += Math.round((Math.random() * 2 - 1) * varience);
         }
         return data;
       }
     }, {
-      key: 'getTimeline',
-      value: function getTimeline(start, end, step) {
+      key: 'getMonthlyLabels',
+      value: function getMonthlyLabels(start, end, step) {
         var secs,
             data = [];
         for (secs = +start; secs < +end; secs += step) {
-          data.push(new Date(secs).toDateString());
+          data.push(days[new Date(secs).getDay()]);
+        }
+        return data;
+      }
+    }, {
+      key: 'getWeeklyLabels',
+      value: function getWeeklyLabels(start, end) {
+        var secs,
+            data = [];
+        for (secs = +start; secs < +end; secs += TIME.day) {
+          data.push(days[new Date(secs).getDay()]);
+        }
+        return data;
+      }
+    }, {
+      key: 'getMonthlyLabels',
+      value: function getMonthlyLabels(start, end) {
+        var secs,
+            data = [];
+        for (secs = +start; secs < +end; secs += TIME.day) {
+          var date = new Date(secs);
+          data.push(SHORT_DAYS[date.getDay()] + ' ' + date.getDate());
         }
         return data;
       }

@@ -9,7 +9,6 @@ $flat-dark-green: #27ae60;
   flex-flow: row nowrap;
 
   width: calc(100% - 2rem);
-  max-width: 50rem;
 
   margin: 0 auto;
   margin-top: 1rem;
@@ -28,6 +27,11 @@ $date-padding: .5em;
 .date-select__text {
   padding-top: $date-padding;
   padding-bottom: $date-padding;
+  display: inline-block;
+}
+
+.date-select__label {
+  margin-left: 1em;
 }
 
 .date-select__arrow {
@@ -39,6 +43,13 @@ $date-padding: .5em;
 }
 
 .date-select__arrow:hover {
-  background: rgba(0,0,0,.1);
+  background: darken($flat-dark-green, 5%);
 }
 
+.date-select__dropdown {
+  background: none;
+  border: none;
+  height: 2em;
+  margin-bottom: -2em;
+  border: 1px solid transparent;
+}
