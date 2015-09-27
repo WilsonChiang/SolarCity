@@ -11,29 +11,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
     filter_class = filters.MoneyFilter
     queryset = models.Reading.objects.none()
 
-    def retrieve(self, request, pk, min_time, max_time, step):
-        if not pk:
-            raise Http404
-
-        home = models.Home.objects.filter(wel_address=pk).first()
-        if not home:
-            raise Http404
-        qs = models.Energy.objects.filter(wel=home.wel_address)
-
-        if min_time and int(min_time):
-            min_time = int(min_time)
-            min_datetime = datetime.datetime.fromtimestamp(min_time)
-            qs = qs.filter(sample_time__gte=min_datetime)
-        else:
-            raise ValueError
-
-        if max_time and int(max_time):
-            max_time = int(max_time)
-            max_datetime = datetime.datetime.fromtimestamp(max_time)
-            qs = qs.filter(sample_time__lte=max_datetime)
-        else:
-            raise ValueError
-
+    def _get_data(self, qs, min_time, max_time, step, home):
         energies = list(qs)
         base_costs = []
         solar_savings = []
@@ -67,7 +45,6 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
             base_energies.append(base_energy)
             solar_energies.append(solar_energy)
             new_energies.append(new_energy)
-
             base_energy_emissions = utils.co2_emissions(base_energy, home.emissions_amount_kg)
             solar_energy_emissions = utils.co2_emissions(solar_energy, home.emissions_amount_kg)
             new_energy_emissions = base_energy_emissions - solar_energy_emissions
@@ -75,6 +52,9 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
             base_emissions.append(base_energy_emissions)
             solar_emissions.append(solar_energy_emissions)
             new_emissions.append(new_energy_emissions)
+            
+        if len(new_costs) == 0:
+            return None
 
         average_base = sum(base_costs)/len(base_costs)*1.0
         average_solar = sum(solar_savings)/len(solar_savings)*1.0
@@ -105,8 +85,36 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
                 }
             }
         }
+        return foo
 
-        return Response(foo)
+    def retrieve(self, request, pk, min_time, max_time, step):
+        if not pk:
+            raise Http404
+
+        home = models.Home.objects.filter(wel_address=pk).first()
+        if not home:
+            raise Http404
+        qs = models.Energy.objects.filter(wel=home.wel_address)
+
+        if min_time and int(min_time):
+            min_time = int(min_time)
+            min_datetime = datetime.datetime.fromtimestamp(min_time)
+            qs = qs.filter(sample_time__gte=min_datetime)
+        else:
+            raise ValueError
+
+        if max_time and int(max_time):
+            max_time = int(max_time)
+            max_datetime = datetime.datetime.fromtimestamp(max_time)
+            qs = qs.filter(sample_time__lte=max_datetime)
+        else:
+            raise ValueError
+        if min_time >= max_time:
+            raise ValueError
+        data = self._get_data(qs, min_time, max_time, step, home)
+        if not data:
+            raise ValueError
+        return Response(data)
 
     def _get_factor_based_on_step(self, step):
         step_size = 60 * 60
@@ -139,6 +147,37 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         return step_size * 7
 
 
+class AverageViewSet(MoneyViewSet):
+
+    def retrieve(self, request, min_time, max_time, step):
+        qs = models.Energy.objects.all()
+        if min_time and int(min_time):
+            min_time = int(min_time)
+            min_datetime = datetime.datetime.fromtimestamp(min_time)
+            qs = qs.filter(sample_time__gte=min_datetime)
+        else:
+            raise ValueError
+
+        if max_time and int(max_time):
+            max_time = int(max_time)
+            max_datetime = datetime.datetime.fromtimestamp(max_time)
+            qs = qs.filter(sample_time__lte=max_datetime)
+        else:
+            raise ValueError
+        if min_time >= max_time:
+            raise ValueError
+
+        homes = list(models.Home.objects.all())
+        data = []
+        for home in homes:
+            my_qs = qs.filter(wel=home.wel_address)
+
+            house_data = self._get_data(my_qs, min_time, max_time, step, home)
+            data.append({'{}'.format(home.wel_address): house_data})
+
+        return Response(data)
+
+
 class HomesViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.HomeSerializer
     filter_class = filters.HomeFilter
@@ -164,7 +203,7 @@ class BadgesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Badges.objects.all()
 
 @never_cache
-def SMSViewSet(request):
+def SMSView(request):
     from twilio.rest import TwilioRestClient
     ACCOUNT_SID = "AC95419b4b89bf3d42e42c41f7a6bf8185"
     AUTH_TOKEN = "8447326b72c83584e36c058f1165426f"

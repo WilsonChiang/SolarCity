@@ -25,9 +25,11 @@ router.register(r'badges', views.BadgesViewSet)
 router.register(r'status', views.StatusViewSet)
 
 urlpatterns = [
-    url(r'^api/sms/', views.SMSViewSet),
+    url(r'^api/sms/', views.SMSView),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls)),
     url(r'^api/money/(?P<pk>\w+)/(?P<min_time>\w+)/(?P<max_time>\w+)/(?P<step>\w+)$', views.MoneyViewSet.as_view({'get': 'retrieve'}),
         name='money_detail'),
+    url(r'^api/average/(?P<min_time>\w+)/(?P<max_time>\w+)/(?P<step>\w+)$', views.AverageViewSet.as_view({'get': 'retrieve'}),
+        name='average_detail'),
 ]
