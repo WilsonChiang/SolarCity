@@ -23,11 +23,15 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
             min_time = int(min_time)
             min_datetime = datetime.datetime.fromtimestamp(min_time)
             qs = qs.filter(sample_time__gte=min_datetime)
+        else:
+            raise ValueError
 
         if max_time and int(max_time):
             max_time = int(max_time)
             max_datetime = datetime.datetime.fromtimestamp(max_time)
             qs = qs.filter(sample_time__lte=max_datetime)
+        else:
+            raise ValueError
 
         energies = list(qs)
         base_costs = []
@@ -36,7 +40,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         for i in range((max_time - min_time) / (self._get_factor_based_on_step(step))):
             my_energies = energies[i * self._get_other_step(step):(i + 1) * self._get_other_step(step)]
             if len(my_energies) == 0:
-                break
+                continue
             base_energy_cost = utils.cost_of_energy(sum([energy.power_to_heat_total for energy in my_energies]),
                                                     home.fuel_cost)
             solar_energy_cost = utils.cost_of_energy(sum([energy.power_to_solar_tank for energy in my_energies]),
@@ -66,30 +70,30 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
 
     def _get_factor_based_on_step(self, step):
         step_size = 60 * 60
-        if step == 'hour':
-            return step_size
-        step_size *= 24
         if step == 'daily':
             return step_size
-        # weekly
+        step_size *= 24
+        if step == 'weekly':
+            return step_size
+        # 'monthly'
         return step_size * 7
 
     def _get_other_step(self, step):
         step_size = 60
-        if step == 'hour':
+        if step == 'daily':
             return step_size
         step_size *= 24
-        if step == 'daily':
+        if step == 'weekly':
             return step_size
         # weekly
         return step_size * 7
 
     def _get_other_other_step(self, step):
         step_size = 1
-        if step == 'hour':
+        if step == 'daily':
             return step_size
         step_size *= 24
-        if step == 'daily':
+        if step == 'weekly':
             return step_size
         # weekly
         return step_size * 7

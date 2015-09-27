@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'debug_toolbar.apps.DebugToolbarConfig',
     'rest_framework',
     'solarcity',
+    'cacheops',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -124,3 +125,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Redis Caching
+
+ENABLE_REDIS = True
+REDIS_HOST = '104.197.49.131'
+REDIS_PORT = 6329
+
+if ENABLE_REDIS:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": "redis://{host}:{port}/0".format(host=REDIS_HOST, port=REDIS_PORT),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                }
+        }
+    }
+
+
+CACHEOPS_REDIS = {
+    'host': REDIS_HOST,
+    'port': REDIS_PORT,
+    'db': 1,
+    }
+
+CACHEOPS = {
+    '*.*': {'timeout': 60*60}
+}
+
