@@ -70,16 +70,6 @@ var Server = (function () {
         return data;
       }
     }, {
-      key: 'getMonthlyLabels',
-      value: function getMonthlyLabels(start, end, step) {
-        var secs,
-            data = [];
-        for (secs = +start; secs < +end; secs += step) {
-          data.push(days[new Date(secs).getDay()]);
-        }
-        return data;
-      }
-    }, {
       key: 'getWeeklyLabels',
       value: function getWeeklyLabels(start, end) {
         var secs,
@@ -90,15 +80,23 @@ var Server = (function () {
         return data;
       }
     }, {
-      key: 'getMonthlyLabels',
-      value: function getMonthlyLabels(start, end) {
-        var secs,
-            data = [];
-        for (secs = +start; secs < +end; secs += TIME.day) {
-          var date = new Date(secs);
-          data.push(SHORT_DAYS[date.getDay()] + ' ' + date.getDate());
+      key: 'getLabels',
+      value: function getLabels(start, end) {
+        var startTime = +start,
+            endTime = +end,
+            delta = endTime - startTime,
+            labels = [],
+            step = TIME.week,
+            i;
+        // Month
+        if (endTime - startTime <= TIME.week) {
+          step = TIME.day;
         }
-        return data;
+        for (i = startTime; i < endTime; i += step) {
+          var date = new Date(i);
+          labels.push(SHORT_MONTHS[date.getMonth()] + ' ' + date.getDate());
+        }
+        return labels;
       }
     }]);
 

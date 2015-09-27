@@ -51,10 +51,19 @@ var LineGraph = React.createClass({
 
   mixins: [GraphMixin],
   componentDidMount: function componentDidMount() {
+    this.reloadChart();
+  },
+
+  reloadChart: function reloadChart() {
     var params = this.getParams(this.props.labels, this.props.data);
     var chart = React.findDOMNode(this.refs.chart);
     this.chart = new Chart(chart.getContext('2d')).Line(params.data, params.options);
   },
+
+  componentDidUpdate: function componentDidUpdate() {
+    this.reloadChart();
+  },
+
   render: function render() {
     return(
       // Wrap in div so that padding on parent doesn't break size.

@@ -1,0 +1,19 @@
+
+
+.value-square {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-flow: column nowrap; 
+  justify-content: center;
+}
+
+.value-square__title {
+  font-size: 2rem;
+}
+
+.value-square__value {
+  font-size: 10rem;
+}
+

@@ -15,11 +15,11 @@ var Loader = React.createClass({
   render: function render() {
     return React.createElement(
       "div",
-      null,
-      React.createElement("div", { style: { opacity: this.props.isLoaded ? 0 : 1 }, className: "loader" }),
+      { className: "u-fill-parent" },
+      React.createElement("div", { style: { display: this.props.isLoaded ? 'none' : 'block' }, className: "loader" }),
       React.createElement(
         "div",
-        { style: { display: this.props.isLoaded ? 'inherit' : 'none' } },
+        { className: "u-fill-parent", style: { display: this.props.isLoaded ? 'inherit' : 'none' } },
         this.props.content
       )
     );

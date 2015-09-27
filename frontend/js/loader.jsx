@@ -13,9 +13,9 @@ var Loader = React.createClass({
 
   render: function () {
     return (
-      <div>
-        <div style={{ opacity: this.props.isLoaded ? 0 : 1}} className="loader"/>
-        <div style={{ display: this.props.isLoaded ? 'inherit' : 'none' }}>
+      <div className="u-fill-parent">
+        <div style={{ display: this.props.isLoaded ? 'none' : 'block' }} className="loader"/>
+        <div className="u-fill-parent" style={{ display: this.props.isLoaded ? 'inherit' : 'none' }}>
           {this.props.content}
         </div>
       </div>

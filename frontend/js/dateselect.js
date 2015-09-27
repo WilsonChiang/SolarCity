@@ -3,16 +3,22 @@
 var DateSelect = React.createClass({
   displayName: 'DateSelect',
 
+  pretendNow: new Date('March 15, 2015'),
+
   getInitialState: function getInitialState() {
     return {
       timeStep: 'Monthly',
-      stepsInPast: 6
+      stepsInPast: 0
     };
+  },
+
+  componentDidMount: function componentDidMount() {
+    this.runOnChange();
   },
 
   getStartDate: function getStartDate() {
     var timeStep = this.state.timeStep,
-        now = new Date(),
+        now = this.pretendNow,
         stepsInPast = this.state.stepsInPast;
     switch (timeStep) {
       case 'Monthly':
@@ -28,16 +34,16 @@ var DateSelect = React.createClass({
 
   getEndDate: function getEndDate() {
     var deltas = {},
-        now = new Date(),
+        now = this.pretendNow,
         stepsInPast = this.state.stepsInPast;
     if (this.state.stepsInPast == 0) {
-      return new Date();
+      return now;
     } else {
       switch (this.state.timeStep) {
         case 'Monthly':
           return new Date(now.getFullYear(), now.getMonth() - stepsInPast + 1);
         case 'Weekly':
-          return new Date(now.getFullYear(), now.getMonth(), now.getDate() - (7 * stepsInPast - 1));
+          return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7 * (stepsInPast - 1));
         case 'Daily':
           return new Date(now.getFullYear(), now.getMonth(), now.getDate() - (stepsInPast - 1));
         default:
@@ -54,24 +60,32 @@ var DateSelect = React.createClass({
     var _this = this;
 
     return function (event) {
-      console.log(_this.state.stepsInPast);
       _this.setState({
         stepsInPast: Math.max(0, _this.state.stepsInPast + delta)
-      });
+      }, _this.runOnChange);
     };
   },
 
   onDropdownChange: function onDropdownChange(event) {
+    this.runOnChange();
     this.setState({
       timeStep: event.target.value,
       stepsInPast: 0
     });
   },
 
+  runOnChange: function runOnChange() {
+    this.props.onChange({
+      startDate: this.getStartDate(),
+      endDate: this.getEndDate(),
+      timeStep: this.state.timeStep
+    });
+  },
+
   timeStepDropdown: function timeStepDropdown() {
     return React.createElement(
       'select',
-      { onChange: this.onDropdownChange,
+      { value: this.state.timeStep, onChange: this.onDropdownChange,
         className: 'date-select__dropdown' },
       React.createElement(
         'option',
@@ -96,11 +110,6 @@ var DateSelect = React.createClass({
   },
 
   render: function render() {
-    this.props.onChange({
-      startDate: this.getStartDate(),
-      endDate: this.getEndDate(),
-      timeStep: this.state.timeStep
-    });
     return React.createElement(
       'div',
       { className: 'date-select u-unselectable' },

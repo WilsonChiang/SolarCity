@@ -82,7 +82,7 @@ var Server = (function () {
         Math.round(+startDate / 1000),
         Math.round(+endDate / 1000),
         step
-      ].join('/'))
+      ].join('/'));
     }
 
     getEnergyUsed(houseID, startDate, endDate) {
@@ -99,14 +99,6 @@ var Server = (function () {
       return data;
     }
 
-    getMonthlyLabels(start, end, step) {
-      var secs, data = [];
-      for (secs = +start; secs < +end; secs += step) {
-        data.push(days[new Date(secs).getDay()]);
-      }
-      return data;
-    }
-
     getWeeklyLabels(start, end) {
       var secs, data = [];
       for (secs = +start; secs < +end; secs += TIME.day) {
@@ -115,15 +107,22 @@ var Server = (function () {
       return data;
     }
 
-    getMonthlyLabels(start, end) {
-      var secs, data = [];
-      for (secs = +start; secs < +end; secs += TIME.day) {
-        var date = new Date(secs);
-        data.push(
-          SHORT_DAYS[date.getDay()] + ' ' + date.getDate()
-        );
+    getLabels(start, end) {
+      var startTime = +start,
+        endTime = +end,
+        delta = endTime - startTime,
+        labels = [],
+        step = TIME.week,
+        i;
+      // Month
+      if (endTime - startTime <= TIME.week) {
+        step = TIME.day;
       }
-      return data;
+      for (i = startTime; i < endTime; i += step) {
+        var date = new Date(i);
+        labels.push(SHORT_MONTHS[date.getMonth()] + ' ' + date.getDate());
+      }
+      return labels;
     }
   }
 
