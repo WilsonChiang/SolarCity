@@ -45,7 +45,7 @@ class StatusFilter(django_filters.FilterSet):
         model = models.Reading
 
     def filter_home(self, qs, value):
-        qs = qs.filter(wel=value).reverse()[:1]
+        qs = qs.filter(wel=value).order_by('-sample_time')[:1]
         return qs
 
 

@@ -70,16 +70,6 @@ var Server = (function () {
         return data;
       }
     }, {
-      key: 'getMonthlyLabels',
-      value: function getMonthlyLabels(start, end, step) {
-        var secs,
-            data = [];
-        for (secs = +start; secs < +end; secs += step) {
-          data.push(days[new Date(secs).getDay()]);
-        }
-        return data;
-      }
-    }, {
       key: 'getWeeklyLabels',
       value: function getWeeklyLabels(start, end) {
         var secs,
