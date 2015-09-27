@@ -43,6 +43,10 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         solar_energies = []
         new_energies = []
 
+        base_emissions = []
+        solar_emissions = []
+        new_emissions = []
+
         for i in range((max_time - min_time) / (self._get_factor_based_on_step(step))):
             my_energies = energies[i * self._get_other_step(step):(i + 1) * self._get_other_step(step)]
             if len(my_energies) == 0:
@@ -64,6 +68,14 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
             solar_energies.append(solar_energy)
             new_energies.append(new_energy)
 
+            base_energy_emissions = utils.co2_emissions(base_energy, home.emissions_amount_kg)
+            solar_energy_emissions = utils.co2_emissions(solar_energy, home.emissions_amount_kg)
+            new_energy_emissions = base_energy_emissions - solar_energy_emissions
+
+            base_emissions.append(base_energy_emissions)
+            solar_emissions.append(solar_energy_emissions)
+            new_emissions.append(new_energy_emissions)
+
         average_base = sum(base_costs)/len(base_costs)*1.0
         average_solar = sum(solar_savings)/len(solar_savings)*1.0
         average_new = sum(new_costs)/len(new_costs)*1.0
@@ -80,10 +92,16 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
                     'solar_savings': solar_savings,
                     'base_costs': base_costs,
                 },
-                'energy':{
+                'energy': {
                     'old_energy_use': base_energies,
                     'solar_energy_use': solar_energies,
                     'new_energy_use': new_energies
+                },
+                'emissions': {
+                    'old_energy_emissions': base_emissions,
+                    'solar_energy_use': solar_emissions,
+                    'new_emissions': new_emissions
+
                 }
             }
         }
