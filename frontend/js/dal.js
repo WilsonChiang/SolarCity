@@ -47,6 +47,11 @@ var Server = (function () {
         return this.get('/homes');
       }
     }, {
+      key: 'getHome',
+      value: function getHome(houseID) {
+        return this.get('/homes/' + houseID + "/?timestamp=" + Date.now());
+      }
+    }, {
       key: 'getMoneySaved',
       value: function getMoneySaved(houseID, startDate, endDate, step) {
         return this.get(['/money', houseID, Math.round(+startDate / 1000), Math.round(+endDate / 1000), step].join('/'));
@@ -55,6 +60,11 @@ var Server = (function () {
       key: 'getEnergyUsed',
       value: function getEnergyUsed(houseID, startDate, endDate) {
         return getMoneySaved(houseID, startDate, endDate);
+      }
+    }, {
+      key: 'getHomeSystemStatus',
+      value: function getHomeSystemStatus(houseID) {
+        return this.get('/status/?home=' + houseID + "&timestamp=" + Date.now());
       }
     }, {
       key: 'randomTimeSeriesData',

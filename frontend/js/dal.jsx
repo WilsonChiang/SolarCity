@@ -75,6 +75,10 @@ var Server = (function () {
       return this.get('/homes')
     }
 
+    getHome(houseID) {
+      return this.get('/homes/' + houseID + "/?timestamp=" + Date.now())
+    }
+
     getMoneySaved(houseID, startDate, endDate, step) {
       return this.get([
         '/money',
@@ -87,6 +91,10 @@ var Server = (function () {
 
     getEnergyUsed(houseID, startDate, endDate) {
       return getMoneySaved(houseID, startDate, endDate);
+    }
+
+    getHomeSystemStatus(houseID) {
+      return this.get('/status/?home=' + houseID + "&timestamp=" + Date.now())
     }
 
     randomTimeSeriesData(start, end, step, average, varience) {

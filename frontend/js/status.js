@@ -1,60 +1,111 @@
-"use strict";
+'use strict';
 
 var Status = React.createClass({
-  displayName: "Status",
+  displayName: 'Status',
+
+  getInitialState: function getInitialState() {
+    return { home: {},
+      status: {
+        led_pump_on: 0,
+        led_t_coll_hi: 1,
+        led_t_stor_hi: 1,
+        led_delt_lo: 1
+      }
+    };
+  },
+
+  componentDidMount: function componentDidMount() {
+    var _this = this;
+
+    Server.getHome('3').then(function (data) {
+      _this.setState({ home: data });
+    });
+    Server.getHomeSystemStatus('WEL0754').then(function (data) {
+      _this.setState({ status: data[0] });
+    });
+  },
 
   render: function render() {
-    var status = {
-      "url": "http://localhost:8000/api/status/49094984/",
-      "wel": "WEL0754",
-      "sample_time": "2014-03-01T00:00:31Z",
-      "aux_heat_on": 0.0,
-      "flow_gly": 0.0,
-      "flow_water": 0.0,
-      "flow_water_d": 48.01,
-      "heat_aux_d": 31.0,
-      "pv_volts": 0.0,
-      "pv_amps": 0.01,
-      "solar_power": 0.0,
-      "t_collector": 0.0,
-      "t_storage": 24.5,
-      "t_hx_gly_in": 27.6,
-      "t_hx_gly_out": 25.5,
-      "t_hx_water_out": 40.19,
-      "t_water_cold": 19.5,
-      "t_water_solar": 42.1,
-      "t_water_hot": 55.98,
-      "led_pump_on": 1,
-      "led_t_coll_hi": 0,
-      "led_t_stor_hi": 0,
-      "led_delt_lo": 0,
-      "created_at": null,
-      "updated_at": null,
-      "date": "2014-03-01",
-      "time": "00:00:31"
-    };
+
+    var home = this.state.home;
+    var status = this.state.status;
     return React.createElement(
-      "div",
-      { className: "dashboard" },
+      'div',
+      { className: 'dashboard' },
       React.createElement(
-        "h1",
+        'h1',
         null,
-        "Home System Status"
+        'Home System Status'
       ),
       React.createElement(
-        "div",
-        { className: "dashboard__boxes" },
+        'div',
+        { className: 'dashboard__boxes' },
         React.createElement(
-          "div",
-          { className: "box-wide" },
-          React.createElement(StatusIndicator, { label: "Pump on", enabled: status.led_pump_on }),
-          React.createElement(StatusIndicator, { label: "Collector Temp HI", enabled: !status.led_t_coll_hi }),
-          React.createElement(StatusIndicator, { label: "Storage Temp HI", enabled: !status.led_t_stor_hi }),
-          React.createElement(StatusIndicator, { label: "Low Delta-T", enabled: !status.led_delt_lo })
+          'div',
+          { className: 'box-wide' },
+          React.createElement(StatusIndicator, { label: 'Pump on', enabled: status.led_pump_on }),
+          React.createElement(StatusIndicator, { label: 'Collector Temp HI', enabled: !status.led_t_coll_hi }),
+          React.createElement(StatusIndicator, { label: 'Storage Temp HI', enabled: !status.led_t_stor_hi }),
+          React.createElement(StatusIndicator, { label: 'Low Delta-T', enabled: !status.led_delt_lo })
         ),
-        React.createElement("div", { className: "box" }),
-        React.createElement("div", { className: "box" }),
-        React.createElement("div", { className: "box-wide" })
+        React.createElement(
+          'div',
+          { className: 'box home-info' },
+          React.createElement(
+            'h1',
+            null,
+            home.wel_address
+          ),
+          React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'div',
+              { className: 'label' },
+              'Conventional System:'
+            ),
+            React.createElement(
+              'div',
+              null,
+              home.conventional_system
+            )
+          ),
+          React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'div',
+              { className: 'label' },
+              'Size of home:'
+            ),
+            React.createElement(
+              'div',
+              null,
+              home.size_of_home,
+              ' sq/ft'
+            )
+          ),
+          React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'div',
+              { className: 'label' },
+              'Age of home:'
+            ),
+            React.createElement(
+              'div',
+              null,
+              home.age_of_home,
+              ' years'
+            )
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'box-wide-tall' },
+          React.createElement(Map, { query: home.postal_code })
+        )
       )
     );
   }

@@ -1,35 +1,29 @@
 
 var Status = React.createClass({
-  render: function () {
-    var status = {
-      "url": "http://localhost:8000/api/status/49094984/",
-      "wel": "WEL0754",
-      "sample_time": "2014-03-01T00:00:31Z",
-      "aux_heat_on": 0.0,
-      "flow_gly": 0.0,
-      "flow_water": 0.0,
-      "flow_water_d": 48.01,
-      "heat_aux_d": 31.0,
-      "pv_volts": 0.0,
-      "pv_amps": 0.01,
-      "solar_power": 0.0,
-      "t_collector": 0.0,
-      "t_storage": 24.5,
-      "t_hx_gly_in": 27.6,
-      "t_hx_gly_out": 25.5,
-      "t_hx_water_out": 40.19,
-      "t_water_cold": 19.5,
-      "t_water_solar": 42.1,
-      "t_water_hot": 55.98,
-      "led_pump_on": 1,
-      "led_t_coll_hi": 0,
-      "led_t_stor_hi": 0,
-      "led_delt_lo": 0,
-      "created_at": null,
-      "updated_at": null,
-      "date": "2014-03-01",
-      "time": "00:00:31"
+  getInitialState: function () {
+    return { home: {},
+      status: {
+        led_pump_on: 0,
+        led_t_coll_hi: 1,
+        led_t_stor_hi: 1,
+        led_delt_lo: 1
+      }
     };
+  },
+
+  componentDidMount: function() {
+    Server.getHome('3').then(data => {
+      this.setState({ home: data });
+    });
+    Server.getHomeSystemStatus('WEL0754').then(data => {
+      this.setState({ status: data[0] });
+    });
+  },
+
+  render: function () {
+
+    var home = this.state.home;
+    var status = this.state.status;
     return (
       <div className="dashboard">
         <h1>Home System Status</h1>
@@ -40,13 +34,23 @@ var Status = React.createClass({
             <StatusIndicator label="Storage Temp HI" enabled={!status.led_t_stor_hi} />
             <StatusIndicator label="Low Delta-T" enabled={!status.led_delt_lo} />
           </div>
-          <div className="box">
-
+          <div className="box home-info">
+            <h1>{home.wel_address}</h1>
+            <div>
+              <div className="label">Conventional System:</div>
+              <div>{home.conventional_system}</div>
+            </div>
+            <div>
+              <div className="label">Size of home:</div>
+              <div>{home.size_of_home} sq/ft</div>
+            </div>
+            <div>
+              <div className="label">Age of home:</div>
+              <div>{home.age_of_home} years</div>
+            </div>
           </div>
-          <div className="box">
-
-          </div>
-          <div className="box-wide">
+          <div className="box-wide-tall">
+            <Map query={home.postal_code} />
           </div>
         </div>
       </div>
