@@ -70,15 +70,21 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         foo = {
             'home': {
                 'count': len(new_costs),
-                'average_old': average_base,
-                'average_solar': average_solar,
-                'average_new': average_new,
-                'new_costs': new_costs,
-                'solar_savings': solar_savings,
-                'base_costs': base_costs,
-                'old_energy_use': base_energies,
-                'solar_energy_use': solar_energies,
-                'new_energy_use': new_energies
+                'averages': {
+                    'average_base': average_base,
+                    'average_solar': average_solar,
+                    'average_new': average_new,
+                },
+                'costs': {
+                    'new_costs': new_costs,
+                    'solar_savings': solar_savings,
+                    'base_costs': base_costs,
+                },
+                'energy':{
+                    'old_energy_use': base_energies,
+                    'solar_energy_use': solar_energies,
+                    'new_energy_use': new_energies
+                }
             }
         }
 
