@@ -33,7 +33,7 @@ class MoneyViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             raise ValueError
 
-        energies = list(qs.cache())
+        energies = list(qs)
         base_costs = []
         solar_savings = []
         new_costs = []
