@@ -1,5 +1,5 @@
 import datetime
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from rest_framework import viewsets
 from rest_framework.response import Response
 from solarcity import serializers, models, filters, utils
@@ -115,3 +115,20 @@ class BadgesViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.BadgesSerializer
     filter_class = filters.BadgeFilter
     queryset = models.Badges.objects.all()
+
+
+def SMSViewSet(request):
+    from twilio.rest import TwilioRestClient
+    ACCOUNT_SID = "AC95419b4b89bf3d42e42c41f7a6bf8185"
+    AUTH_TOKEN = "8447326b72c83584e36c058f1165426f"
+
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+
+    # Hard coded for now because time.
+    client.messages.create(
+        to="19022232344",
+        from_="1 415-599-2671",
+        body="Some energy notification",
+    )
+    response = {'success': 'Successfully sent message.'}
+    return JsonResponse(response)

@@ -24,6 +24,7 @@ router.register(r'energy', views.EnergyViewSet)
 router.register(r'badges', views.BadgesViewSet)
 
 urlpatterns = [
+    url(r'^api/sms/', views.SMSViewSet),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls)),
     url(r'^api/money/(?P<pk>\w+)/(?P<min_time>\w+)/(?P<max_time>\w+)/(?P<step>\w+)$', views.MoneyViewSet.as_view({'get': 'retrieve'}),
