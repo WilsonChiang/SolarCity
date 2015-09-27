@@ -1,5 +1,6 @@
 import datetime
 from django.http import Http404, JsonResponse
+from django.views.decorators.cache import cache_page, never_cache
 from rest_framework import viewsets
 from rest_framework.response import Response
 from solarcity import serializers, models, filters, utils
@@ -138,7 +139,7 @@ class BadgesViewSet(viewsets.ReadOnlyModelViewSet):
     filter_class = filters.BadgeFilter
     queryset = models.Badges.objects.all()
 
-
+@never_cache
 def SMSViewSet(request):
     from twilio.rest import TwilioRestClient
     ACCOUNT_SID = "AC95419b4b89bf3d42e42c41f7a6bf8185"
