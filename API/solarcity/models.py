@@ -145,7 +145,6 @@ class Energy(Reading):
     #     return (full - solar)
     #
 
-
     class Meta:
         proxy = True
 
@@ -153,3 +152,12 @@ class Energy(Reading):
 class Money(Reading):
     class Meta:
         proxy = True
+
+
+class Badges(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    # This is a horrible hotlink. DEAL WITH IT.
+    image = models.CharField(max_length=255)
+    # This sucks but foreign key error and no time!
+    home = models.CharField(max_length=255)

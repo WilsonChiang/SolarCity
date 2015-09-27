@@ -19,3 +19,8 @@ class EnergySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta(object):
         model = models.Energy
+
+
+class BadgesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta(object):
+        model = models.Badges

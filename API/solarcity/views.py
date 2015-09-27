@@ -56,3 +56,8 @@ class EnergyViewSet(viewsets.ReadOnlyModelViewSet):
     filter_class = filters.EnergyFilter
     queryset = models.Energy.objects.all()
 
+
+class BadgesViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.BadgesSerializer
+    filter_class = filters.BadgeFilter
+    queryset = models.Badges.objects.all()
