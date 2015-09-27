@@ -3,8 +3,8 @@ from solarcity import models
 
 
 class MoneyFilter(django_filters.FilterSet):
-    time = django_filters.MethodFilter(help_text='filter by household id', action='filter_time')
-    home = django_filters.MethodFilter(help_text='filter by time frame', action='filter_home')
+    time = django_filters.MethodFilter(help_text='filter by time frame', action='filter_time')
+    home = django_filters.MethodFilter(help_text='filter by household id', action='filter_home')
 
     class Meta:
         model = models.Reading
@@ -24,8 +24,8 @@ class HomeFilter(django_filters.FilterSet):
 
 
 class EnergyFilter(django_filters.FilterSet):
-    time = django_filters.MethodFilter(help_text='filter by household id', action='filter_time')
-    home = django_filters.MethodFilter(help_text='filter by time frame', action='filter_home')
+    time = django_filters.MethodFilter(help_text='filter by time frame', action='filter_time')
+    home = django_filters.MethodFilter(help_text='filter by household id', action='filter_home')
 
     class Meta:
         model = models.Reading
@@ -35,4 +35,15 @@ class EnergyFilter(django_filters.FilterSet):
         return qs
 
     def filter_time(self, qs, value):
+        return qs
+
+
+class BadgeFilter(django_filters.FilterSet):
+    home = django_filters.MethodFilter(help_text='filter by household id', action='filter_home')
+
+    class Meta:
+        model = models.Badges
+
+    def filter_home(self, qs, value):
+        qs = qs.filter(home=value)[:1000]
         return qs

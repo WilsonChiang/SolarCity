@@ -37,13 +37,18 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
+
+    'corsheaders',
+
     'debug_toolbar.apps.DebugToolbarConfig',
     'rest_framework',
     'solarcity',
+    'cacheops',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -58,8 +63,7 @@ ROOT_URLCONF = 'solarcityapi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,7 +85,7 @@ WSGI_APPLICATION = 'solarcityapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '173.194.238.206',
+        'HOST': '173.194.239.27',
         'PORT': 3306,
         'NAME': "Solarcity",
         'USER': "root",
@@ -98,6 +102,10 @@ DATABASES = {
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
 }
+
+# CORS Headers
+CORS_ALLOW_CREDENTIALS = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -117,3 +125,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Redis Caching
+
+ENABLE_REDIS = True
+REDIS_HOST = '104.197.49.131'
+REDIS_PORT = 6329
+
+if ENABLE_REDIS:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": "redis://{host}:{port}/0".format(host=REDIS_HOST, port=REDIS_PORT),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                }
+        }
+    }
+
+
+CACHEOPS_REDIS = {
+    'host': REDIS_HOST,
+    'port': REDIS_PORT,
+    'db': 1,
+    }
+
+CACHEOPS = {
+    '*.*': {'timeout': 60*60}
+}
+

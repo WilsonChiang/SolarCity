@@ -5,7 +5,8 @@ from solarcity import models
 class MoneySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta(object):
-        model = models.Reading
+        model = models.Money
+        fields = ['average', 'values']
 
 
 class HomeSerializer(serializers.HyperlinkedModelSerializer):
@@ -18,3 +19,8 @@ class EnergySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta(object):
         model = models.Energy
+
+
+class BadgesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta(object):
+        model = models.Badges
