@@ -62,8 +62,7 @@ ROOT_URLCONF = 'solarcityapi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,11 +84,11 @@ WSGI_APPLICATION = 'solarcityapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.5.2',
+        'HOST': '173.194.239.27',
         'PORT': 3306,
-        'NAME': "solarcity",
-        'USER': "myaio",
-        'PASSWORD': "myaio",
+        'NAME': "Solarcity",
+        'USER': "root",
+        'PASSWORD': "FriskyDingo!",
         'OPTIONS': {
             'charset': 'utf8',
             'init_command': ('SET '
