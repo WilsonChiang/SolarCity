@@ -111,6 +111,13 @@ class EnergyViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Energy.objects.all()
 
 
+class StatusViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.StatusSerializer
+    filter_class = filters.StatusFilter
+    # The data is in the database by sample time, so we can do .last() for performance
+    queryset = models.Status.objects.all()
+
+
 class BadgesViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.BadgesSerializer
     filter_class = filters.BadgeFilter

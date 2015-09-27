@@ -149,6 +149,11 @@ class Energy(Reading):
         proxy = True
 
 
+class Status(Reading):
+    class Meta:
+        proxy = True
+
+
 class Money(Reading):
     class Meta:
         proxy = True
