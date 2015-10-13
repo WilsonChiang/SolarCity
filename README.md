@@ -1,7 +1,4 @@
 SolarCity
 =========
-
-
-Get hyped.
-
-I'm hyped.
+Github repo for InnovaCorp Solar City hackathon!
+We were finalists!
